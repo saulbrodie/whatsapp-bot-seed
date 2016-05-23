@@ -12,5 +12,6 @@ def trihard(message, match):
     return TextMessageProtocolEntity(BOT_SAUL_DICT[randint(0, len(BOT_SAUL_DICT) - 1)], to=message.getFrom())
 
 def overwatch_countdown(message, match):
-    MESSAGE = 'OVERWATCH BEGINS IN: %s' % get_countdown(2016, 05, 24, 02)
+    MESSAGE = '''OVERWATCH BEGINS IN: %s.
+                 DON\'T BE LATE!''' % get_countdown(2016, 05, 24, 02)
     return TextMessageProtocolEntity("%s" % MESSAGE, to=message.getFrom())
