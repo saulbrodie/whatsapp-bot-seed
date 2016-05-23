@@ -2,8 +2,8 @@ import threading
 
 
 class PollHelper:
-    def __init__(self, router):
-        self._router = router
+    def __init__(self, interface_layer):
+        self._interface_layer = interface_layer
         self._is_poll = False
         self._question = None
         self._poll_options = []
