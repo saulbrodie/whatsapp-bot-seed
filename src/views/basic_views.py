@@ -1,6 +1,6 @@
 from yowsup.layers.protocol_messages.protocolentities import TextMessageProtocolEntity
 from random import randint
-from src.utils.countdown import get_countdown
+from utils.countdown import get_countdown
 
 BOT_SAUL_DICT = ('fangay', 'apple sucks', 'overwatch arcade game', 'hearthstone pooping game',
                  'game of thrones is overrated', 'blizzard is bad')
