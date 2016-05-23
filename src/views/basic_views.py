@@ -9,7 +9,10 @@ def echo(message, match):
     return TextMessageProtocolEntity("%s" % match.group("echo_message"), to=message.getFrom())
 
 def trihard(message, match):
-    return TextMessageProtocolEntity(BOT_SAUL_DICT[randint(0, len(BOT_SAUL_DICT) - 1)], to=message.getFrom())
+    trihard_emojis = u'\U0001f575'
+    trihard_emojis *= 3
+    MESSAGE = BOT_SAUL_DICT[randint(0, len(BOT_SAUL_DICT) - 1)] + trihard_emojis
+    return TextMessageProtocolEntity(MESSAGE, to=message.getFrom())
 
 def overwatch_countdown(message, match):
     MESSAGE = '''OVERWATCH BEGINS IN: %s.
