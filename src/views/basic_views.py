@@ -58,7 +58,7 @@ class BasicViews():
         trihard_emojis = u'\U0001f575'
         trihard_emojis *= 3
         MESSAGE = BOT_SAUL_DICT[randint(0, len(BOT_SAUL_DICT) - 1)] + ' ' + trihard_emojis
-        self.send_image('http://orig09.deviantart.net/5253/f/2012/084/3/3/pewdiepie__try_hard_face_by_arashidaisuki-d4tw9js.png', message.getFrom())
+        # self.send_image('http://orig09.deviantart.net/5253/f/2012/084/3/3/pewdiepie__try_hard_face_by_arashidaisuki-d4tw9js.png', message.getFrom())
         self.send_text(MESSAGE, message.getFrom())
 
     def overwatch_countdown(self, message, match):
@@ -67,10 +67,10 @@ class BasicViews():
         self.send_text(MESSAGE, message.getFrom())
 
     def overwatch_hype(self, message, match):
-        self.send_image('http://assets.vg247.com/current/2015/09/overwatch.jpg', message.getFrom())
+        # self.send_image('http://assets.vg247.com/current/2015/09/overwatch.jpg', message.getFrom())
         self.send_text('OVERWATCH HYPEEE!', message.getFrom())
     
     def niggro_mode(self, message, match):
         MESSAGE = NIGGRO_MODE[randint(0, len(NIGGRO_MODE) -1)]
-        self.send_image('https://pbs.twimg.com/media/Bm-Aaf-CEAAHA-P.jpg', message.getFrom())
+        # self.send_image('https://pbs.twimg.com/media/Bm-Aaf-CEAAHA-P.jpg', message.getFrom())
         self.send_text(MESSAGE, message.getFrom())
