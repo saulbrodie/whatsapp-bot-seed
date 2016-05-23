@@ -2,6 +2,7 @@ from yowsup.layers.protocol_messages.protocolentities import TextMessageProtocol
 from random import randint
 from utils.countdown import get_countdown
 from utils.PollHelper import *
+from utils.media_sender import *
 from views.media import MediaViews
 
 BOT_SAUL_DICT = ('fangay', 'apple sucks', 'overwatch arcade game', 'hearthstone pooping game',
@@ -16,7 +17,12 @@ NIGGRO_MODE = ('Bring dem fuckin rockets to dat ass', 'Bend that bitch like beck
 class BasicViews():
     def __init__(self, interface_layer):
         self.interface_layer = interface_layer
+        self.image_sender = ImageSender(interface_layer)
+        self.video_sender = VideoSender(interface_layer)
+        self.audio_sender = AudioSender(interface_layer)
         self.media_views = MediaViews(interface_layer)
+
+        self._poll_helper = PollHelper(self)
 
         self.routes = [
             ("^/e(cho)?\s(?P<echo_message>[^$]+)$", self.echo),
@@ -74,7 +80,7 @@ class BasicViews():
         options = match.group('options').split(' ')
 
         try:
-            router._poll_helper.start_poll(message.getFrom(), question, options)
+            self._poll_helper.start_poll(message.getFrom(), question, options)
             self.send_text(question + '?', message.getFrom())
             for i in range(1, len(options) + 1):
                 self.send_text(str(i) + ': ' + options[i - 1], message.getFrom())
@@ -87,7 +93,7 @@ class BasicViews():
         try:
             num = match.group('number')
             num = int(num, 10)
-            router._poll_helper.vote(num, message.getAuthor())
+            self._poll_helper.vote(num, message.getAuthor())
             self.send_text('Thank you for your vote!', message.getFrom())
         except InvalidVoteException:
             self.send_text('Invalid vote', message.getFrom())
@@ -98,8 +104,8 @@ class BasicViews():
 
     def end_poll(self, message, match):
         try:
-            question = router._poll_helper.get_question()
-            winner, num_votes, results = router._poll_helper.end_poll()
+            question = self._poll_helper.get_question()
+            winner, num_votes, results = self._poll_helper.end_poll()
 
             RESULTS = ''
             for element in results:

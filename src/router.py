@@ -14,8 +14,6 @@ from views.media import MediaViews
 from views.super_views import SuperViews
 from views.group_admin import GroupAdminViews
 
-from utils.PollHelper import PollHelper
-
 
 class RouteLayer(YowInterfaceLayer):
     def __init__(self):
@@ -37,14 +35,12 @@ class RouteLayer(YowInterfaceLayer):
 
         routes.extend(BasicViews(self).routes)
 
-
         # group admin views disabled by default.
         # read the issue on: https://github.com/joaoricardo000/whatsapp-bot-seed/issues/4
         # enable on your own risk!
         # routes.extend(GroupAdminViews(self).routes)
 
         self.views = [(re.compile(pattern), callback) for pattern, callback in routes]
-        self._poll_helper = PollHelper(self)
 
     def route(self, message):
         "Get the text from message and tests on every route for a match"
