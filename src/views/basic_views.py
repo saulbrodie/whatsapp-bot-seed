@@ -36,7 +36,7 @@ class BasicViews():
         ]
 
         # spam something every timeout
-        threading.Timer(1, self.timer_callback, args=[900]).start()
+        threading.Timer(900, self.timer_callback, args=[900]).start()
 
     def send_text(self, data, to):
         self.interface_layer.toLower(TextMessageProtocolEntity(data, to=to))
@@ -49,7 +49,7 @@ class BasicViews():
                      DON\'T BE LATE!''' % get_countdown(2016, 05, 24, 02)
 
         self.send_text(MESSAGE, '972503305550-1369598727@g.us')
-        threading.Timer(interval, self.timer_callback).start()
+        threading.Timer(interval, self.timer_callback, args=[900]).start()
 
     def echo(self, message, match):
         self.send_text(match.group("echo_message"), message.getFrom())
