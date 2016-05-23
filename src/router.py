@@ -9,22 +9,12 @@ import logging
 
 from yowsup.layers.interface import YowInterfaceLayer, ProtocolEntityCallback
 
-from views import basic_views
+from views.basic_views import BasicViews
 from views.media import MediaViews
 from views.super_views import SuperViews
 from views.group_admin import GroupAdminViews
 
 from utils.PollHelper import PollHelper
-
-
-# Basic regex routes
-routes = [("^/e(cho)?\s(?P<echo_message>[^$]+)$", basic_views.echo),
-          ('^/trihard$', basic_views.trihard),
-          ('^/countdown$', basic_views.overwatch_countdown),
-          ('^/poll\s(?P<question>.+)\?\s(?P<options>.*)$', basic_views.start_poll),
-          ('^/vote\s(?P<number>\d)$', basic_views.vote),
-          ('^/endpoll$', basic_views.end_poll),
-          ('.*(overwatch)|(OVERWATCH)|(Overwatch).*$', basic_views.overwatch_hype)]
 
 
 class RouteLayer(YowInterfaceLayer):
@@ -37,12 +27,15 @@ class RouteLayer(YowInterfaceLayer):
             so the callback can access the 'self.toLower' method
         """
         super(RouteLayer, self).__init__()
+        routes = []
 
         # Media views to handle url print screen and media download
         routes.extend(MediaViews(self).routes)
 
         # adds super fun views
         routes.extend(SuperViews(self).routes)
+
+        routes.extend(BasicViews(self).routes)
 
 
         # group admin views disabled by default.
@@ -70,7 +63,7 @@ class RouteLayer(YowInterfaceLayer):
             else:
                 logging.info("(PVT)[%s]\t%s" % (message.getFrom(), message.getBody()))
             # execute callback request
-            data = callback(message, match, self)
+            data = callback(message, match)
             if data: self.toLower(data)  # if callback returns a message entity, sends it.
         except Exception as e:
             logging.exception("Error routing message: %s\n%s" % (message.getBody(), message))
