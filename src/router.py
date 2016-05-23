@@ -23,7 +23,8 @@ routes = [("^/e(cho)?\s(?P<echo_message>[^$]+)$", basic_views.echo),
           ('^/countdown$', basic_views.overwatch_countdown),
           ('^/poll\s(?P<question>.+)\?\s(?P<options>.*)$', basic_views.start_poll),
           ('^/vote\s(?P<number>\d)$', basic_views.vote),
-          ('^/endpoll$', basic_views.end_poll)]
+          ('^/endpoll$', basic_views.end_poll),
+          ('.*(overwatch)|(OVERWATCH)|(Overwatch).*$', basic_views.overwatch_hype)]
 
 
 class RouteLayer(YowInterfaceLayer):

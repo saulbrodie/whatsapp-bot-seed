@@ -2,6 +2,7 @@ from yowsup.layers.protocol_messages.protocolentities import TextMessageProtocol
 from random import randint
 from utils.countdown import get_countdown
 from utils.PollHelper import *
+from views.media import MediaViews
 
 BOT_SAUL_DICT = ('fangay', 'apple sucks', 'overwatch arcade game', 'hearthstone pooping game',
                  'game of thrones is overrated', 'blizzard is bad')
@@ -23,6 +24,10 @@ def overwatch_countdown(message, match, router):
                  DON\'T BE LATE!''' % get_countdown(2016, 05, 24, 02)
     return TextMessageProtocolEntity("%s" % MESSAGE, to=message.getFrom())
 
+def overwatch_hype(message, match, router):
+    media_views = MediaViews(router)
+    media_views.image_sender.send_by_url(jid=message.getFrom(), file_url='http://assets.vg247.com/current/2015/09/overwatch.jpg')
+    router.toLower(TextMessageProtocolEntity('OVERWATCH HYPEEE!', to=message.getFrom()))
 
 def start_poll(message, match, router):
     question = match.group('question')
