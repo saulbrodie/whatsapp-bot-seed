@@ -58,6 +58,9 @@ class PollHelper:
     def get_question(self):
         return self._question
 
+    def get_options(self):
+        return self._poll_options
+
     # def timer_end_poll(self):
     #     question = self._question
     #     try:

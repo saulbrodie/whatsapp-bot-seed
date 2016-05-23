@@ -4,6 +4,7 @@ from utils.countdown import get_countdown
 from utils.PollHelper import *
 from utils.media_sender import *
 from views.media import MediaViews
+from views.poll_views import PollViews
 
 BOT_SAUL_DICT = ('fangay', 'apple sucks', 'overwatch arcade game', 'hearthstone pooping game',
                  'game of thrones is overrated', 'blizzard is bad')
@@ -21,16 +22,15 @@ class BasicViews():
         self.video_sender = VideoSender(interface_layer)
         self.audio_sender = AudioSender(interface_layer)
         self.media_views = MediaViews(interface_layer)
-
-        self._poll_helper = PollHelper(self)
+        self.poll_views = PollViews(self)
 
         self.routes = [
             ("^/e(cho)?\s(?P<echo_message>[^$]+)$", self.echo),
             ('^/trihard$', self.trihard),
             ('^/countdown$', self.overwatch_countdown),
-            ('^/poll\s(?P<question>.+)\?\s(?P<options>.*)$', self.start_poll),
-            ('^/vote\s(?P<number>\d)$', self.vote),
-            ('^/endpoll$', self.end_poll),
+            ('^/poll\s(?P<question>.+)\?\s(?P<options>.*)$', self.poll_views.start_poll),
+            ('^/vote\s(?P<number>\d)$', self.poll_views.vote),
+            ('^/endpoll$', self.poll_views.end_poll),
             ('^/niggroMode$', self.niggro_mode),
             ('.*(overwatch)|(OVERWATCH)|(Overwatch).*$', self.overwatch_hype),
         ]
@@ -74,47 +74,3 @@ class BasicViews():
         MESSAGE = NIGGRO_MODE[randint(0, len(NIGGRO_MODE) -1)]
         self.send_image('https://pbs.twimg.com/media/Bm-Aaf-CEAAHA-P.jpg', message.getFrom())
         self.send_text(MESSAGE, message.getFrom())
-        
-    def start_poll(self, message, match):
-        question = match.group('question')
-        options = match.group('options').split(' ')
-
-        try:
-            self._poll_helper.start_poll(message.getFrom(), question, options)
-            self.send_text(question + '?', message.getFrom())
-            for i in range(1, len(options) + 1):
-                self.send_text(str(i) + ': ' + options[i - 1], message.getFrom())
-        except AlreadyPollingException:
-            self.send_text('Please finish your poll first', message.getFrom())
-        except:
-            self.send_text('Invalid arguments for poll', message.getFrom())
-
-    def vote(self, message, match):
-        try:
-            num = match.group('number')
-            num = int(num, 10)
-            self._poll_helper.vote(num, message.getAuthor())
-            self.send_text('Thank you for your vote!', message.getFrom())
-        except InvalidVoteException:
-            self.send_text('Invalid vote', message.getFrom())
-        except AlreadyVotedException:
-            self.send_text('Already voted', message.getFrom())
-        except:
-            self.send_text('Invalid choice', message.getFrom())
-
-    def end_poll(self, message, match):
-        try:
-            question = self._poll_helper.get_question()
-            winner, num_votes, results = self._poll_helper.end_poll()
-
-            RESULTS = ''
-            for element in results:
-                RESULTS += element[1] + ' with ' + str(element[0]) + ' votes.\n'
-
-            self.send_text(
-                u'\U0001f4ca' + 'Poll ended! here are the results:\n' + question + '?\n' + 'Winner is: ' + winner +
-                ' with ' + str(num_votes) + ' votes!', message.getFrom())
-
-            self.send_text(RESULTS, message.getFrom())
-        except NoPollActive:
-            self.send_text('No poll active, end what?', message.getFrom())
