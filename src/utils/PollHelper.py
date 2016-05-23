@@ -40,6 +40,12 @@ class PollHelper:
             raise NoPollActive
         max_vote = max(self._votes, key=self._votes.get)
         winner = self._poll_options[max_vote - 1]
+        num_votes = max(self._votes.values())
+
+        results = []
+        for i in range(1, len(self._poll_options) + 1):
+            results.append((self._votes[i], self._poll_options[i - 1]))
+
 
         self._is_poll = False
         self._question = None
@@ -47,7 +53,7 @@ class PollHelper:
         self._poll_options = []
         self._voters = {}
 
-        return winner
+        return winner, num_votes, results
 
     def get_question(self):
         return self._question

@@ -21,7 +21,9 @@ from utils.PollHelper import PollHelper
 routes = [("^/e(cho)?\s(?P<echo_message>[^$]+)$", basic_views.echo),
           ('^/trihard$', basic_views.trihard),
           ('^/countdown$', basic_views.overwatch_countdown),
-          ('^/poll\s(?P<question>[\S]+)\s(?P<options>.*)$', basic_views.start_poll)]
+          ('^/poll\s(?P<question>.+)\?\s(?P<options>.*)$', basic_views.start_poll),
+          ('^/vote\s(?P<number>\d)$', basic_views.vote),
+          ('^/endpoll$', basic_views.end_poll)]
 
 
 class RouteLayer(YowInterfaceLayer):
@@ -67,7 +69,7 @@ class RouteLayer(YowInterfaceLayer):
             else:
                 logging.info("(PVT)[%s]\t%s" % (message.getFrom(), message.getBody()))
             # execute callback request
-            data = callback(message, match)
+            data = callback(message, match, self)
             if data: self.toLower(data)  # if callback returns a message entity, sends it.
         except Exception as e:
             logging.exception("Error routing message: %s\n%s" % (message.getBody(), message))
