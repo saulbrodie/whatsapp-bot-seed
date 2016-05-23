@@ -25,17 +25,17 @@ class MediaViews():
             ("^/t(ts)?\s(?P<tts_text>[^$]+)$", self.send_tts)
         ]
 
-    def send_video(self, message, match):
+    def send_video(self, message, match, router):
         self.video_sender.send_by_url(jid=message.getFrom(), file_url=message.getBody())
 
-    def send_image(self, message, match):
+    def send_image(self, message, match, router):
         self.image_sender.send_by_url(jid=message.getFrom(), file_url=message.getBody())
 
-    def send_url_print(self, message, match):
+    def send_url_print(self, message, match, router):
         url = message.getBody()
         self.url_print_sender.send_by_url(jid=message.getFrom(), file_url=url)
 
-    def send_tts(self, message, match):
+    def send_tts(self, message, match, router):
         tts_text = match.group("tts_text")
         self.tts_sender.send(jid=message.getFrom(), text=tts_text)
 

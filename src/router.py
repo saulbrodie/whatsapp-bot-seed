@@ -14,11 +14,14 @@ from views.media import MediaViews
 from views.super_views import SuperViews
 from views.group_admin import GroupAdminViews
 
+from utils.PollHelper import PollHelper
+
 
 # Basic regex routes
 routes = [("^/e(cho)?\s(?P<echo_message>[^$]+)$", basic_views.echo),
-          ('^/trihard', basic_views.trihard),
-          ('^/countdown', basic_views.overwatch_countdown)]
+          ('^/trihard$', basic_views.trihard),
+          ('^/countdown$', basic_views.overwatch_countdown),
+          ('^/poll\s(?P<question>[\S]+)\s(?P<options>.*)$', basic_views.start_poll)]
 
 
 class RouteLayer(YowInterfaceLayer):
@@ -45,6 +48,7 @@ class RouteLayer(YowInterfaceLayer):
         # routes.extend(GroupAdminViews(self).routes)
 
         self.views = [(re.compile(pattern), callback) for pattern, callback in routes]
+        self._poll_helper = PollHelper(self)
 
     def route(self, message):
         "Get the text from message and tests on every route for a match"
