@@ -78,6 +78,6 @@ class BasicViews():
         # self.send_image('https://pbs.twimg.com/media/Bm-Aaf-CEAAHA-P.jpg', message.getFrom())
         self.send_text(MESSAGE, message.getFrom())
         
-    def niggro_mode(self, message, match):
+    def sukdik(self, message, match):
         MESSAGE = SukDik[randint(0, len(SukDik) -1)]
         self.send_text(MESSAGE, message.getFrom())
