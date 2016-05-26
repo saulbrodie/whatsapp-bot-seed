@@ -6,12 +6,14 @@ from utils.media_sender import *
 from views.media import MediaViews
 from views.poll_views import PollViews
 
-BOT_SAUL_DICT = ('fangay', 'apple sucks', 'overwatch arcade game', 'hearthstone pooping game',
-                 'game of thrones is overrated', 'blizzard is bad')
+BOT_SAUL_DICT = ('Fangay', 'Apple sucks', 'Overwatch good arcade game', 'Hearthstone pooping game',
+                 'Game of thrones is overrated', 'SDYF' ,'SDAA')
 
 NIGGRO_MODE = ('Bring dem fuckin rockets to dat ass', 'Bend that bitch like beckham', 'I dont fuck around',
                'Im de president of hittin dat ass', 'Never hand a dick to someone with parkinsons', 
                'Imma fuck you ass up')
+               
+SUKDIK = ('YuvalFatael', 'AdamSwis', 'SaulBrodie', 'AmitAlfassy', 'GalPressman', 'OrDicker')
 
 
 # Basic regex routes
@@ -33,6 +35,7 @@ class BasicViews():
             ('^/endpoll$', self.poll_views.end_poll),
             ('^/niggroMode$', self.niggro_mode),
             ('.*(overwatch)|(OVERWATCH)|(Overwatch).*$', self.overwatch_hype),
+            ('^/SukDik$', self.sukdik),
         ]
 
         # spam something every timeout
@@ -73,4 +76,8 @@ class BasicViews():
     def niggro_mode(self, message, match):
         MESSAGE = NIGGRO_MODE[randint(0, len(NIGGRO_MODE) -1)]
         # self.send_image('https://pbs.twimg.com/media/Bm-Aaf-CEAAHA-P.jpg', message.getFrom())
+        self.send_text(MESSAGE, message.getFrom())
+        
+    def niggro_mode(self, message, match):
+        MESSAGE = SukDik[randint(0, len(SukDik) -1)]
         self.send_text(MESSAGE, message.getFrom())
