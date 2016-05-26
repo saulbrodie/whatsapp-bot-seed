@@ -13,7 +13,7 @@ NIGGRO_MODE = ('Bring dem fuckin rockets to dat ass', 'Bend that bitch like beck
                'Im de president of hittin dat ass', 'Never hand a dick to someone with parkinsons', 
                'Imma fuck you ass up')
                
-SUKDIK = ('YuvalFatael', 'AdamSwis', 'SaulBrodie', 'AmitAlfassy', 'GalPressman', 'OrDicker')
+SUKDIK = ('YuvalFatael', 'AdamSwid', 'SaulBrodie', 'AmitAlfassy', 'GalPressman', 'OrDicker')
 
 
 # Basic regex routes
