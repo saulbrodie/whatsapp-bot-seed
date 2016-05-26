@@ -79,5 +79,5 @@ class BasicViews():
         self.send_text(MESSAGE, message.getFrom())
         
     def sukdik(self, message, match):
-        MESSAGE = SukDik[randint(0, len(SukDik) -1)]
+        MESSAGE = SUKDIK[randint(0, len(SUKDIK) -1)]
         self.send_text(MESSAGE, message.getFrom())
